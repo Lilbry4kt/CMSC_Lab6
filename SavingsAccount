@@ -1,0 +1,77 @@
+package lab6;
+
+public class SavingsAccount extends BankAccount {
+    private static final double INTEREST_RATE = 0.025;
+    private static int savingsNumber = 0;
+    private int mySavingsNumber;
+    private String accountNumber;
+
+    public SavingsAccount(String name, double initialBalance) {
+        super(name, initialBalance);
+        savingsNumber++;
+        mySavingsNumber = savingsNumber;
+        accountNumber = getAccountNumber() + "-" + mySavingsNumber;
+    }
+
+    public void postInterest() {
+        double interest = getBalance() * INTEREST_RATE / 12;
+        deposit(interest);
+    }
+
+    @Override
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    @Override
+    public double getBalance() {
+        return super.getBalance();
+    }
+
+    public SavingsAccount(SavingsAccount oldAccount, double initialBalance) {
+        super(oldAccount, initialBalance);
+        savingsNumber++;
+        mySavingsNumber = savingsNumber;
+        accountNumber = oldAccount.getAccountNumber() + "-" + mySavingsNumber;
+    }
+
+    // Main method for testing
+    public static void main(String[] args) {
+        SavingsAccount account1 = new SavingsAccount("Kevin", 1000.0);
+        System.out.println("Account Number " + account1.getAccountNumber() + " belonging to " + account1.getOwner());
+        System.out.println("Initial balance = $" + account1.getBalance());
+
+        account1.deposit(500.0);
+        System.out.println("After deposit of $500.00, balance = $" + account1.getBalance());
+
+        account1.withdraw(1000.0);
+        System.out.println("After withdrawal of $1000.00, balance = $" + account1.getBalance());
+
+        System.out.println();
+
+        SavingsAccount account2 = new SavingsAccount("Will", 400.0);
+        System.out.println("Account Number " + account2.getAccountNumber() + " belonging to " + account2.getOwner());
+        System.out.println("Initial balance = $" + account2.getBalance());
+
+        account2.deposit(500.0);
+        System.out.println("After deposit of $500.00, balance = $" + account2.getBalance());
+
+        account2.withdraw(1000.0);
+        System.out.println("Insufficient funds to withdraw $1000.00, balance = $" + account2.getBalance());
+
+        account2.postInterest();
+        System.out.println("After monthly interest has been posted, balance = $" + account2.getBalance());
+
+        System.out.println();
+
+        SavingsAccount account3 = new SavingsAccount("Big Bry", 5.0);
+        System.out.println("Account Number " + account3.getAccountNumber() + " belonging to " + account3.getOwner());
+        System.out.println("Initial balance = $" + account3.getBalance());
+
+        account3.deposit(500.0);
+        System.out.println("After deposit of $500.00, balance = $" + account3.getBalance());
+
+        account3.withdraw(1000.0);
+        System.out.println("Insufficient funds to withdraw $1000.00, balance = $" + account3.getBalance());
+    }
+}
